@@ -6,6 +6,15 @@ router.get('/login', (req, res, next) => {
   res.send('login page');
 });
 
+router.get('/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/auth/login');
+  });
+});
+
 router.get(
   '/login/google',
   passport.authenticate('google', {
@@ -19,6 +28,6 @@ router.get(
 
 router.get('/login/google/redirect', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
   // Successful authentication, redirect home.
-  res.send(req.user);
+  res.redirect('/profile');
 });
 export { router as authRoute };

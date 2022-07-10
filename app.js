@@ -1,5 +1,6 @@
 import express from 'express';
 import { authRoute } from './routes/auth.js';
+import { homeRoute } from './routes/home.js';
 import 'dotenv/config.js';
 import './config/passport-setup.js';
 import './config/mongodb-setup.js';
@@ -24,6 +25,7 @@ app.use(passport.session());
 
 //ROUTES
 app.use('/auth', authRoute);
+app.use('/', homeRoute);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
