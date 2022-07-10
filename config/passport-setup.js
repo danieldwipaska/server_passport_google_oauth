@@ -7,13 +7,13 @@ import User from '../models/User.js';
 
 passport.serializeUser((user, done) => {
   //send user.id to browser
-  done(null, user.id);
+  done(null, user.id); //go to passport.deserializeUser
 });
 
 passport.deserializeUser((id, done) => {
   //authenticate user.id from browser
   User.findById(id).then((user) => {
-    done(null, user);
+    done(null, user); // go to routes
   });
 });
 
@@ -29,7 +29,7 @@ passport.use(
       User.findOne({ googleId: profile.id }).then((user) => {
         if (user) {
           console.log('User already exists');
-          cb(null, user);
+          cb(null, user); //go to passport.serializeUser
         } else {
           new User({
             googleId: profile.id,
@@ -38,7 +38,7 @@ passport.use(
             .save()
             .then((newUser) => {
               console.log('Welcome, New User');
-              cb(null, newUser);
+              cb(null, newUser); //go to passport.serializeUser
             });
         }
       });
